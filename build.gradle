@@ -1,6 +1,7 @@
 buildscript {
     ext {
         springBootVersion = '2.1.5.RELEASE'
+        lombokVersion = '3.6.4'
     }
     repositories {
         mavenCentral()
@@ -11,7 +12,7 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        classpath("io.freefair.gradle:lombok-plugin:3.6.4")
+        classpath("io.freefair.gradle:lombok-plugin:${lombokVersion}")
     }
 }
 
