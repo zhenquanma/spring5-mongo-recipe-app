@@ -70,7 +70,7 @@ public class IngredientServiceImplTest {
         IngredientCommand ingredientCommand = ingredientService.findByRecipeIdAndIngredientId("1", "1");
 
         assertNotNull(ingredientCommand);
-        assertEquals(Long.valueOf("1"), ingredientCommand.getId());
+        assertEquals("1", ingredientCommand.getId());
         verify(recipeRepository).findById(anyString());
     }
 
