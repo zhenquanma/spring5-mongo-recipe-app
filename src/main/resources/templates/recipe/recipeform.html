@@ -33,7 +33,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6 form-group font-weight-bold">
-                                <label th:text="#{recipe.description}">Recipe Description:</label>
+                                <label>Recipe Description:</label>
                                 <!--In Bootstrap 4, validation syntax changes as below-->
                                 <input type="text" class="form-control" th:field="*{description}"
                                        th:class="${#fields.hasErrors('description')}? 'form-control is-invalid' : 'form-control'"/>
@@ -49,17 +49,19 @@
                                 <label>Categories:</label>
                             </div>
                             <div class="col-md-9 form-group">
-                                <div class="radio">
-                                    <label>
-                                        <input type="checkbox" value=""/>
-                                        Cat 1
-                                    </label>
+                                <div class="form-check" th:remove="all">
+                                    <input type="checkbox" class="form-check-input" value="">
+                                    <label class="form-check-label">Cat 1</label>
                                 </div>
-                                <div class="radio" th:remove="all">
-                                    <label>
-                                        <input type="checkbox" value=""/>
-                                        Cat 2
-                                    </label>
+                                <div class="form-check" th:remove="all">
+                                    <input type="checkbox" class="form-check-input" value="">
+                                    <label class="form-check-label">Cat 2</label>
+                                </div>
+                                <div class="form-check"  th:each="category : ${categoryList}">
+                                    <input type="checkbox" class="form-check-input" name="categoryId" value=""
+                                           th:value="${category.id}"
+                                           th:attr="checked=${categoryIds.contains(category.id)? true:false}">
+                                    <label class="form-check-label" th:text="${category.description}">Cat 3</label>
                                 </div>
                             </div>
                         </div>
@@ -87,7 +89,7 @@
                             <div class="col-md-3 form-group font-weight-bold">
                                 <label>Difficulty:</label>
                                 <select class="form-control" th:field="*{difficulty}">
-                                    <option th:each="difficultyValue : ${T(guru.guru.springframework.models.Difficulty).values()}"
+                                    <option th:each="difficultyValue : ${T(guru.springframework.models.Difficulty).values()}"
                                             th:value="${difficultyValue.name()}"
                                             th:text="${difficultyValue.name()}">val</option>
                                 </select>

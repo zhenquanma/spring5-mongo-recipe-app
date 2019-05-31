@@ -27,8 +27,10 @@
                         <div class="col-md-5">
                             <form  action="http:\\localhost" method="post" enctype="multipart/form-data"
                                    th:action="@{'/recipe/' + ${recipe.getId()} + '/image'}">
-                                <label class="control-label">Select File</label>
-                                <input id="imagefile" name="imagefile" type="file" class="file">
+                                <div class="form-group">
+                                    <label class="control-label">Select File</label>
+                                    <input id="imagefile" name="imagefile" type="file" class="form-control-file">
+                                </div>
                                 <button type="submit" class="btn btn-success">Submit</button>
                             </form>
                         </div>
