@@ -13,11 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import static java.util.stream.StreamSupport.stream;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -45,7 +42,13 @@ public class RecipeController {
 
     @GetMapping("/new")
     public String newRecipe(Model model) {
+
         model.addAttribute("recipe", new RecipeCommand());
+        //All categories in database
+        model.addAttribute("categoryList", categoryService.findAll());
+
+        //Categories in the found recipe
+        model.addAttribute("categoryIds", new ArrayList<>());
 
         return RECIPE_RECIPEFORM_URL;
     }
@@ -53,12 +56,14 @@ public class RecipeController {
     @GetMapping("/{id}/update")
     public String updateRecipe(@PathVariable String id, Model model){
         RecipeCommand recipe = recipeService.findCommandById(id);
-        Set<String> categoryIds = new HashSet<>();
-        stream(recipe.getCategories().spliterator(), false)
-                .map(categoryCommand -> categoryIds.add(categoryCommand.getId()))
-                .collect(Collectors.toSet());
+        List<String> categoryIds = new ArrayList<>();
+        recipe.getCategories().iterator().forEachRemaining(category -> categoryIds.add(category.getId()));
         model.addAttribute("recipe", recipe);
+
+        //All categories in database
         model.addAttribute("categoryList", categoryService.findAll());
+
+        //Categories in the found recipe
         model.addAttribute("categoryIds", categoryIds);
 
         return RECIPE_RECIPEFORM_URL;
@@ -66,7 +71,8 @@ public class RecipeController {
 
     @PostMapping({"/",""})
     public String saveOrUpdate(@Valid @ModelAttribute("recipe") RecipeCommand command,
-                               @RequestParam("categoryId") String[] categoryId, BindingResult bindingResult) {
+                               BindingResult bindingResult,
+                               @RequestParam("categoryId") String[] categoryId) {
         if(bindingResult.hasErrors()){
             bindingResult.getAllErrors()
                     .forEach(e -> log.debug(e.toString()));

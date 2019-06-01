@@ -49,7 +49,10 @@ public class IngredientServiceImpl implements IngredientService {
             throw new RuntimeException("INGREDIENT NOT FOUND: " + id);
         }
 
-        return ingredientCommandOptional.get();
+        IngredientCommand ingredientCommand = ingredientCommandOptional.get();
+        ingredientCommand.setRecipeId(recipeId);
+
+        return ingredientCommand;
     }
 
     @Override
@@ -71,14 +74,15 @@ public class IngredientServiceImpl implements IngredientService {
         if(!ingredientOptional.isPresent()) {
             //Add new
             Ingredient ingredient = ingredientCommandToIngredient.convert(ingredientCommand);
-            ingredient.setRecipe(recipe);
+//            ingredient.setUom(unitOfMeasureRepository.findById(ingredientCommand.getUom().getId())
+//                    .orElseThrow(() -> new RuntimeException("UOM NOT FOUND")));
             recipe.addIngredient(ingredient);
         }
         else{
             //Update it
             Ingredient ingredient = ingredientOptional.get();
             ingredient.setDescription(ingredientCommand.getDescription());
-            ingredient.setUom(unitOfMeasureRepository.findById(ingredientCommand.getRecipeId())
+            ingredient.setUom(unitOfMeasureRepository.findById(ingredientCommand.getUom().getId())
                     .orElseThrow(() -> new RuntimeException("UOM NOT FOUND")));
             ingredient.setAmount(ingredientCommand.getAmount());
         }
@@ -99,7 +103,10 @@ public class IngredientServiceImpl implements IngredientService {
         }
 
 
-        return ingredientToIngredientCommand.convert(savedIngredientOptional.get());
+        IngredientCommand savedCommand = ingredientToIngredientCommand.convert(savedIngredientOptional.get());
+        savedCommand.setRecipeId(recipe.getId());
+
+        return savedCommand;
     }
 
     @Override
@@ -124,7 +131,6 @@ public class IngredientServiceImpl implements IngredientService {
 
         Ingredient ingredToDelete = ingredientOptional.get();
         recipe.getIngredients().remove(ingredToDelete);
-        ingredToDelete.setRecipe(null); //Hibernate will delete it automatically
         recipeRepository.save(recipe);
     }
 

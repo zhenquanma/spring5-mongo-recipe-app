@@ -111,7 +111,6 @@ public class IngredientServiceImplTest {
 
         Ingredient ingredient = new Ingredient();
         ingredient.setId(idToDelete);
-        ingredient.setRecipe(recipe);
         recipe.addIngredient(ingredient);
 
         when(recipeRepository.findById(anyString())).thenReturn(Optional.of(recipe));

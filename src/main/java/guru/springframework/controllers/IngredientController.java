@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.UUID;
+
 @Slf4j
 @Controller
 public class IngredientController {
@@ -59,6 +61,7 @@ public class IngredientController {
         }
 
         IngredientCommand ingredientCommand = new IngredientCommand();
+        ingredientCommand.setId(UUID.randomUUID().toString());
         ingredientCommand.setRecipeId(recipeId);
         ingredientCommand.setUom(new UnitOfMeasureCommand());
 

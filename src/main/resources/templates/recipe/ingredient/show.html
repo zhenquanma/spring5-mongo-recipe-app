@@ -30,17 +30,11 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Description</th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
                             </tr>
                             </thead>
                             <tr th:remove="all">
                                 <td>12333</td>
                                 <td>Tasty Goodnees 2</td>
-                                <td><a href="#">View</a></td>
-                                <td><a href="#">Update</a></td>
-                                <td><a href="#">Delete</a></td>
                             </tr>
                             <tr>
                                 <td th:text="${ingredient.id}">334</td>
@@ -48,7 +42,11 @@
                             </tr>
                         </table>
                     </div>
+                    <div>
+                        <a class="btn btn-success" href="#" th:href="@{'/recipe/' + ${ingredient.recipeId} + '/ingredients/'}">Done</a>
+                    </div>
                 </div>
+
             </div>
         </div>
     </div>
