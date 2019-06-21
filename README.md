@@ -4,7 +4,7 @@
 # Spring5 Mongo Recipe App 
 
 
-The Recipe App(MongoDB ver.) is a [Spring Boot](https://spring.io/guides/gs/spring-boot) application built using [Maven](https://spring.io/guides/gs/maven/). Users can upload, view recipes with this web application. The project was developed originated from an online course named [Spring Framework 5 - Beginner to Guru](https://go.springframework.guru/spring-framework-5-online-course)
+The Recipe App(MongoDB ver.) is a [Spring Boot](https://spring.io/guides/gs/spring-boot) application built using [Gradle](https://gradle.org/). Users can upload, view recipes with this web application. The project was developed originated from an online course named [Spring Framework 5 - Beginner to Guru](https://go.springframework.guru/spring-framework-5-online-course)
 
 ## Getting Started
 Recipe Application in this repository is using embedded MongoDB as its database.
